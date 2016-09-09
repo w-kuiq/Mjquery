@@ -10,7 +10,7 @@ input.input {
     transition: all 0.2s;
     box-sizing: border-box;
     cursor: pointer;
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
 }
 
 input.input:focus {
@@ -21,6 +21,7 @@ input.input:focus ~i.fa.sel {
     transform: rotate(180deg);
     color: #57c5f7;
 }
+
 .antpull ul {
     width: 200px;
     border-radius: 4px;
@@ -29,7 +30,8 @@ input.input:focus ~i.fa.sel {
     box-shadow: 1px 1px 2px #ddd;
     transition: all 1s;
 }
-input.input:focus ~ul{
+
+input.input:focus ~ul {
     display: block;
     /*opacity: 1;*/
     /*height: auto;*/
@@ -45,11 +47,7 @@ i.sel {
 
 .antpull {
     margin: 50px;
-
-
 }
-
-
 
 .antpull ul li {
     height: 20px;
