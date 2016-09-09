@@ -1,13 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>下拉框选择OOP</title>
-	<link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
-</head>
-<body>
-	<input type="text" placeholder="请选择姓名" ><i class="fa fa-angle-down"></i>
-	
 
+<head>
+    <meta charset="UTF-8">
+    <title>下拉框选择OOP</title>
+    <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/css/reset.css">
+    <link rel="stylesheet" href="public/css/common.css">
+    <link rel="stylesheet" href="css/oopSel.css">
+    <style>
+   
+    </style>
+</head>
+
+<body>
+   <!--  <div class="antpull">
+        <input type="text" class="input" placeholder="请选择姓名"><i class="fa fa-angle-down sel"></i>
+        <ul>
+            <li>大哥</li>
+            <li>二弟</li>
+            <li>三地</li>
+        </ul>
+    </div> -->
+
+    <script src="public/js/jquery-2.1.4.min.js"></script>
+    <script>
+    	//构造函数
+        function Antpull(options) {
+        	this.options = options;
+        	this._init();
+        	this.handle();
+        }
+        Antpull.prototype = {
+        	//初始化数据
+        	_init:function () {
+        		this.dom = document.createElement("div");
+        		this.dom.className="antpull";
+        		this.input = document.createElement("input");
+        		this.input.className="input";
+        		this.input.placeholder = this.options.placeholder;
+        		this.list = document.createElement("ul");
+        		this.list.className="hide";
+        		this.dom.appendChild(this.input);
+        		this.fa = document.createElement("i");
+        		this.fa.className = "fa fa-angle-down sel";
+        		this.dom.appendChild(this.fa);
+        		var item;
+        		for (var i = 0; i < this.options.data.length; i++) {
+        			li = document.createElement("li");
+        			li.innerHTML = this.options.data[i];
+        			this.list.appendChild(li);
+        		}
+        		this.dom.appendChild(this.list);
+        		this.options.position.appendChild(this.dom);
+        	},
+        	handle:function () {
+        		for (var i = 0; i < this.list.children.length; i++) {
+        			this.list.children[i].onclick = function () {
+        				alert(this.innerHTML);
+        			}
+        		}
+        	}
+        }
+        new Antpull({
+        	name : "name",
+        	placeholder:"请输入姓名",
+        	data:["张三","得到","收缩"],
+        	position:document.body
+        })
+    </script>
 </body>
+
 </html>

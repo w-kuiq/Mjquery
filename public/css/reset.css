@@ -17,12 +17,15 @@ time, mark, audio, video {
     font-size: 100%;
     vertical-align: baseline;
     background: transparent;
+    font-family: "Microsoft YaHei";
 }
 
 body {
     line-height: 1;
 }
-
+input{
+    outline: 0;
+}
 :focus {
     outline: 1;
 }
@@ -35,7 +38,9 @@ footer, header, hgroup, menu, nav, section, summary {
 nav ul {
     list-style: none;
 }
-
+ul,li{
+    list-style: none;
+}
 blockquote, q {
     quotes: none;
 }
@@ -53,6 +58,8 @@ a {
     font-size: 100%;
     vertical-align: baseline;
     background: transparent;
+        font-family: "Microsoft YaHei";
+
 }
 
 ins {
