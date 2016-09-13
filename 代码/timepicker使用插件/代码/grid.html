@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			font-size: 14px;
+			font-family: Arial,'Microsoft Yahei';
+		}
+		.margin{
+			margin: 10px;
+		}
+		.grid{
+			display: inline-block;
+			position: relative;
+			border: 1px solid #d9d9d9;
+			color: #525252;
+		}
+		.grid h6{
+			margin: 0;
+			padding: 0;
+		}
+		.grid ul,.grid ul li{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.grid .data{
+
+		}
+		.grid .data .col{
+			float: left;
+		}
+		.grid .data .col:last-child{
+			margin-right: 15px;
+		}
+		.grid .data .col .head{
+			padding:0 10px;
+			height: 29px;
+			line-height: 35px;
+			border-bottom: 1px solid #d9d9d9;
+			border-right: 1px solid #d9d9d9;
+		}
+		.grid .data .col .head h6{
+			font-size: 14px;
+		}
+		.grid .data .col ul{
+
+		}
+		.grid .data .col ul li{
+			height: 29px;
+			line-height: 29px;
+			border-bottom: 1px solid #d9d9d9;
+			border-right: 1px solid #d9d9d9;
+			padding:0 10px;
+			cursor: pointer;
+		}
+		.grid .data .col ul li.hover{
+			background-color: #eee;
+		}
+		.grid .data .col ul li.selected{
+			background-color: #dff0d8;
+		}
+		.grid .data .col ul li:last-child{
+			border-bottom: none;
+		}
+		.grid .toolbar{
+			height: 30px;
+			float: left;
+			width: 100%;
+			border-top: 1px solid #d9d9d9;
+		}
+	</style>
+</head>
+<body>
+	<div id="grid"></div>
+	<script src="jquery-2.2.4.js"></script>
+	<script>
+		$(function(){
+			$("#grid").grid({
+				head:[
+						{text:"Order Id",name:"orderId"},
+						{text:"Custom Id",name:"customId",width:120},
+						{text:"Order Date",name:"orderDate",width:120},
+						{text:"Balance",name:"balance",width:110},
+						{text:"Descript",name:"descript",width:130}
+					 ],
+				data:[{
+						orderId:"1",
+						customId:"Star",
+						orderDate:"2016-09-09",
+						balance:1000000,
+						descript:"The Descript",
+						},
+					   {
+						orderId:"2",
+						customId:"Think",
+						orderDate:"2016-09-09",
+						balance:900000,
+						descript:"The Descript",
+						},
+					   {
+						orderId:"3",
+						customId:"Ryan",
+						orderDate:"2016-09-09",
+						balance:800000,
+						descript:"The Descript",
+						},
+						{
+						orderId:"4",
+						customId:"Fannie",
+						orderDate:"2016-09-09",
+						balance:700000,
+						descript:"The Descript",
+						},
+						{
+						orderId:"5",
+						customId:"James",
+						orderDate:"2016-09-09",
+						balance:600000,
+						descript:"The Descript",
+						}]
+			});
+		});
+		$.fn.grid = function(options){
+			var __DEFAULT__ = {
+				head:[],
+				data:[]
+			};
+			var __PROTO__ = {
+				_init : function(){
+					this.$dom = this.eq(0);
+					this.$dom.html('<div class="grid">'+
+								'<div class="data"></div>'+
+								'<div class="toolbar"></div>'+
+							'</div>');
+					this.$data = this.$dom.find(".grid .data");
+					this.$toolbar = this.$dom.find(".grid .toolbar");
+					this._render();
+				},
+				_render : function(){
+					var head,row;
+					for (var i = 0; i < this.options.head.length; i++) {
+						head = this.options.head[i];
+						this.$data.append('<div class="col">'+
+										'<div class="head" style="width: '+(head.width||60)+'px">'+
+											'<h6 name="'+head.name+'">'+head.text+'</h6>'+
+											'<i></i>'+
+											'<i></i>'+
+										'</div>'+
+										'<ul name="'+head.name+'"></ul>'+
+									'</div>');
+					}
+					this._appendRow();
+				},
+				_appendRow : function(){
+					this.$data.find('ul').html('');
+					for (var i = 0; i < this.options.data.length; i++) {
+						row = this.options.data[i];
+						for (var prop in row) {
+							this.$data.find(".col ul[name='"+prop+"']").append("<li rowIndex='"+i+"'>"+row[prop]+"</li>");
+						}
+					}
+					this._handle();
+				},
+				_handle : function(){
+					var $ul = this.find(".grid .data .col ul");
+					$ul.find("li").hover(function(){
+						$ul.find("li[rowIndex="+$(this).index()+"]").addClass('hover');
+					},function(){
+						$ul.find("li[rowIndex="+$(this).index()+"]").removeClass('hover');
+					}).on('click',function(){
+						$ul.find("li[rowIndex="+$(this).index()+"]").toggleClass('selected');
+					});
+					var $this_ = this;
+					var data = this.options.data;
+					this.find(".grid .data .col .head h6").off('click').on('click',function(){
+						var $this = $(this);
+						if(!$this.attr("order")||$this.attr("order")=='desc'){
+							$this.attr("order","asc");
+						}else{
+							$this.attr("order","desc");
+						}
+						var order = $this.attr("order");
+						var sortFiled = $this.attr("name");
+						data.sort(function(obj1,obj2){
+							if(order==='desc'){
+								return obj2[sortFiled]-obj1[sortFiled];
+							}else{
+								return obj1[sortFiled]-obj2[sortFiled];
+							}
+						});
+						$this_._appendRow();
+					});
+				}
+			};
+			this.options = $.extend(__DEFAULT__,options);
+			$.extend(this,__PROTO__);
+			this._init();
+		}
+	</script>
+</body>
+</html>

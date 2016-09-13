@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="myPlug"></div>
+	<div class="myPlug"></div>
+	<span class="myPlug"></span>
+	<script src="jquery-2.2.4.js"></script>
+	<script>
+		//插件
+		//插件的接口规范
+		//$.fn["pulginName"] = function(){}
+		//$("#myDiv").pulginName();
+		$(function(){
+			var $myPlug = $(".myPlug");
+			$myPlug.helloWorldPlug();
+		});
+		/*
+		 * 里面生成一个文本框和一个按钮
+		 * 当点击按钮的时候，讲文本框里面输入的内容输出到控制台
+		 * 
+		 */
+		$.fn.helloWorldPlug = function(options){
+			options = options||{};
+			this.html("<form action='"+(options.action||"#")+"'><input name='"+(options.name||"name")+"'><button type='button'>"+(options.text||"提交")+"</button></form>");
+			this.find("button").on('click',options.click);
+		}
+	</script>
+</body>
+</html>
