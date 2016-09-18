@@ -38,11 +38,10 @@
                 $(this).nextAll('.selector').hide(100);
             }
         });
-        $('.time-picker .selector ').on('mouseover', function() {
+        $('.time-picker .selector ').hover(function(){
             $(this).attr('selecting', 'true');
-        }).on('mouseout', function() {
+        },function(){
             $(this).attr('selecting', 'false');
-
         })
     })
     </script>
