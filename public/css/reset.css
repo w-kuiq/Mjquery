@@ -59,8 +59,8 @@ a {
     font-size: 100%;
     vertical-align: baseline;
     background: transparent;
-        font-family: "Microsoft YaHei";
-
+    font-family: "Microsoft YaHei";
+    text-decoration: none;
 }
 
 ins {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>时间选择</title>
+    <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/css/reset.css">
+    <link rel="stylesheet" href="public/css/common.css">
+    <link rel="stylesheet" href="css/timePicker.css">
+</head>
+
+<body>
+    <div class="time-picker margin-10">
+        <input class="content" placeholder="请选择时间">
+        <i class="fa fa-clock-o"></i>
+        <i class="fa fa-times-circle"></i>
+        <div class="selector " selecting="false">
+            <ul class="hours ">
+            </ul>
+            <ul class="minutes">
+            </ul>
+            <ul class="seconds">
+            </ul>
+        </div>
+    </div>
+    <script src="public/js/jquery-2.1.4.min.js"></script>
+    <script>
+    $(function() {
+        //点击出现选择时间列表
+        $('.content ').on('focus', function() {
+            $(this).addClass('selecting');
+            $(this).nextAll('.selector').show(100);
+        }).on('blur', function() {
+            var $selec = $('.time-picker .selector');
+            if ($selec.attr('selecting') == 'false') {
+                $(this).removeClass('selecting');
+                $(this).nextAll('.selector').hide(100);
+            }
+        });
+        $('.time-picker .selector ').on('mouseover', function() {
+            $(this).attr('selecting', 'true');
+        }).on('mouseout', function() {
+            $(this).attr('selecting', 'false');
+
+        })
+    })
+    </script>
+</body>
+
+</html>
