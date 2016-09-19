@@ -27,23 +27,112 @@
     <script src="public/js/jquery-2.1.4.min.js"></script>
     <script>
     $(function() {
+        initTime();
         //点击出现选择时间列表
         $('.content ').on('focus', function() {
-            $(this).addClass('selecting');
-            $(this).nextAll('.selector').show(100);
+            if(!this.value){
+                var $selector = $(".time-picker .selector");
+                this.value = getCurrTime();
+                var time = this.value.split(":");
+                var $first = $selector.children().first();
+                setTime($first,time[0]);
+                setTime($first = $first.next(),time[1]);
+                setTime($first = $first.next(),time[2]);
+            }
+            $(this).addClass('selecting').nextAll('.selector').show(100);
         }).on('blur', function() {
             var $selec = $('.time-picker .selector');
             if ($selec.attr('selecting') == 'false') {
-                $(this).removeClass('selecting');
-                $(this).nextAll('.selector').hide(100);
+                $(this).removeClass('selecting').nextAll('.selector').hide(100);
             }
+        }).nextAll(".fa-times-circle").on('click',function(event){
+                // $(this).prevAll("input").val("").trigger("blur");
+                //  event.stopPropagation();
+                // $(this).prevAll("input").val("ddd");
+                alert('d');
+            });
+        $('.content').nextAll('.selector').find('ul').on('mouseover', function() {
+            var start = $(this).index() * 3;
+            setSelection($('.content')[0], start, start + 2);
+        }).on('mousewheel', function(event) {
+            console.log(event);
+            var $field = $(event.currentTarget);
+            var currValue = Number($field.attr("value"));
+            if (event.originalEvent.wheelDelta < 0) {
+                currValue++;
+            } else {
+                currValue--;
+            }
+            setTime($field, currValue);
+        }).on('DOMMouseScroll',function (event) {
+            var $field = $(event.currentTarget);
+            var currValue = Number($field.attr("value"));
+            if (event.originalEvent.detail < 0) {
+                currValue++;
+            } else {
+                currValue--;
+            }
+            setTime($field, currValue);
+        }).find('li').on('click', function() {
+            setTime($(this).parent(), $(this).text());
         });
-        $('.time-picker .selector ').hover(function(){
+
+
+        //做判断增加属性（鼠标点击时）
+        $('.time-picker .selector ').hover(function() {
             $(this).attr('selecting', 'true');
-        },function(){
+        }, function() {
             $(this).attr('selecting', 'false');
         })
+        //将点中的时间放到INPUT中
+        function setTime(lis, value) {
+            value = Number(value);
+            value = Math.max(value,0);
+            lis.attr("value",value).css({
+                transform: "translateY(-" + value * 24 + "px)"
+            });
+            var index = lis.index();
+            var $inputs = $('.content').val().split(':');
+            $inputs[index] = value<10?'0'+value:value;
+            $inputs = $inputs.join(":");
+            $('.content').val($inputs).trigger("focus");;
+        }
+
+        //初始化列表中的时间
+        function initTime() {
+            var $sel = $('.selector'),
+                str = "";
+            for (var i = 0; i < 60; i++) {
+                str += '<li>' + (i < 10 ? '0' + i : i) + '</li>'
+                if (i < 24) {
+                    $sel.find('.hours').html(str);
+                }
+                $sel.find('.minutes').html(str);
+                $sel.find('.seconds').html(str);
+            }
+        }
+        //获取当前时间函数
+        function getCurrTime() {
+            return new Date().toTimeString().substr(0, 8);
+        }
+        //input框的光标位置选择函数
+        function setSelection(input, startPos, endPos) {
+            window.setTimeout(function() {
+                if (typeof input.selectionStart != "undefined") {
+                    input.selectionStart = startPos;
+                    input.selectionEnd = endPos;
+                } else if (document.selection && document.selection.createRange) {
+                    input.select();
+                    var range = document.selection.createRange();
+                    range.collapse(true);
+                    range.moveStart("character", startPos);
+                    range.moveEnd("character", endPos);
+                    range.select();
+                }
+            }, 50);
+        }
     })
+
     </script>
 </body>
 
