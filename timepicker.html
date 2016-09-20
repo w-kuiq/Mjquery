@@ -44,6 +44,9 @@
             var $selec = $('.time-picker .selector');
             if ($selec.attr('selecting') == 'false') {
                 $(this).removeClass('selecting').nextAll('.selector').hide(100);
+                if ($(this).val().length<8){
+                    alert('请选择完整的时间')
+                }
             }
         }).nextAll(".fa-times-circle").on('click', function(event) {
             $(this).prevAll("input").val("").trigger("blur");
