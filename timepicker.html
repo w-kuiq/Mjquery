@@ -30,14 +30,14 @@
         initTime();
         //点击出现选择时间列表
         $('.content ').on('focus', function() {
-            if(!this.value){
+            if (!this.value) {
                 var $selector = $(".time-picker .selector");
                 this.value = getCurrTime();
                 var time = this.value.split(":");
                 var $first = $selector.children().first();
-                setTime($first,time[0]);
-                setTime($first = $first.next(),time[1]);
-                setTime($first = $first.next(),time[2]);
+                setTime($first, time[0]);
+                setTime($first = $first.next(), time[1]);
+                setTime($first = $first.next(), time[2]);
             }
             $(this).addClass('selecting').nextAll('.selector').show(100);
         }).on('blur', function() {
@@ -45,17 +45,13 @@
             if ($selec.attr('selecting') == 'false') {
                 $(this).removeClass('selecting').nextAll('.selector').hide(100);
             }
-        }).nextAll(".fa-times-circle").on('click',function(event){
-                // $(this).prevAll("input").val("").trigger("blur");
-                //  event.stopPropagation();
-                // $(this).prevAll("input").val("ddd");
-                alert('d');
-            });
+        }).nextAll(".fa-times-circle").on('click', function(event) {
+            $(this).prevAll("input").val("").trigger("blur");
+        });
         $('.content').nextAll('.selector').find('ul').on('mouseover', function() {
             var start = $(this).index() * 3;
             setSelection($('.content')[0], start, start + 2);
         }).on('mousewheel', function(event) {
-            console.log(event);
             var $field = $(event.currentTarget);
             var currValue = Number($field.attr("value"));
             if (event.originalEvent.wheelDelta < 0) {
@@ -63,8 +59,10 @@
             } else {
                 currValue--;
             }
-            setTime($field, currValue);
-        }).on('DOMMouseScroll',function (event) {
+            if (currValue<$(this).children().length) {
+                setTime($field, currValue);
+            }    
+        }).on('DOMMouseScroll', function(event) {
             var $field = $(event.currentTarget);
             var currValue = Number($field.attr("value"));
             if (event.originalEvent.detail < 0) {
@@ -72,7 +70,9 @@
             } else {
                 currValue--;
             }
-            setTime($field, currValue);
+            if (currValue<$(this).children().length) {
+                setTime($field, currValue);
+            }   
         }).find('li').on('click', function() {
             setTime($(this).parent(), $(this).text());
         });
@@ -83,19 +83,24 @@
             $(this).attr('selecting', 'true');
         }, function() {
             $(this).attr('selecting', 'false');
-        })
+        });
+        $('.fa-times-circle').hover(function() {
+            $('.selector').attr('selecting', 'true');
+        }, function() {
+            $('.selector').attr('selecting', 'false');
+        });
         //将点中的时间放到INPUT中
         function setTime(lis, value) {
             value = Number(value);
-            value = Math.max(value,0);
-            lis.attr("value",value).css({
+            value = Math.max(value, 0);
+            lis.attr("value", value).css({
                 transform: "translateY(-" + value * 24 + "px)"
             });
             var index = lis.index();
             var $inputs = $('.content').val().split(':');
-            $inputs[index] = value<10?'0'+value:value;
+            $inputs[index] = value < 10 ? '0' + value : value;
             $inputs = $inputs.join(":");
-            $('.content').val($inputs).trigger("focus");;
+            $('.content').val($inputs).trigger("focus");
         }
 
         //初始化列表中的时间
@@ -132,7 +137,6 @@
             }, 50);
         }
     })
-
     </script>
 </body>
 
