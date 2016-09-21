@@ -11,35 +11,19 @@
 </head>
 
 <body>
-    <!-- <div class="time-picker margin-10">
-        <input class="content" placeholder="请选择时间">
-        <i class="fa fa-clock-o"></i>
-        <i class="fa fa-times-circle"></i>
-        <div class="selector " selecting="false">
-            <ul class="hours ">
-            </ul>
-            <ul class="minutes">
-            </ul>
-            <ul class="seconds">
-            </ul>
-        </div>
-    </div> -->
     <div class="tt time-picker"></div>
     <div class="ss time-picker"></div>
     <script src="public/js/jquery-2.1.4.min.js"></script>
     <script>
     $(function() {
-       
-
-
         $.fn['timePicker']=function(options){
             var _DEFAULT_ ={
-                placeholder:"请选择时间",
+                placeholder:"请选择时间"
             };
             var _PROTO_ = {
                 _init : function () {
                     this.html([
-                        '<input class="content" placeholder="'+options.placeholder+'">',
+                        '<input class="content" placeholder="'+this.options.placeholder+'">',
                         '<i class="fa fa-clock-o"></i>',
                         '<i class="fa fa-times-circle"></i>',
                         '<div class="selector " selecting="false">',
@@ -65,8 +49,7 @@
                         $(this).attr('selecting', 'true');
                     }, function() {
                         $(this).attr('selecting', 'false');
-                    });
-                    $sel.nextAll('.fa-times-circle').hover(function() {
+                    }).nextAll('.fa-times-circle').hover(function() {
                         $sel.attr('selecting', 'true');
                     }, function() {
                         $sel.attr('selecting', 'false');
@@ -74,9 +57,10 @@
                 },
                 _handle:function () {
                     var _this = this;
-                    var $selector = _this.find(".time-picker .selector");
+//                    var $selector = _this.find(".time-picker .selector");
                     this.find('.content ').on('focus', function() {
                         if (!this.value) {
+                            var $selector = $(this).nextAll(".selector");
                             this.value = _this.getCurrTime();
                             var time = this.value.split(":");
                             var $first = $selector.children().first();
@@ -86,7 +70,7 @@
                         }
                         $(this).addClass('selecting').nextAll('.selector').show(100);
                     }).on('blur', function() {
-                      
+                        var $selector = $(this).nextAll(".selector");
                         if ($selector.attr('selecting') == 'false') {
                             $(this).removeClass('selecting').nextAll('.selector').hide(100);
                             // if ($(this).val().length<8){
@@ -143,7 +127,7 @@
                 getCurrTime:function () {
                     return new Date().toTimeString().substr(0, 8);
                 },     
-                setSelection:function () {
+                setSelection:function (input, startPos, endPos) {
                     window.setTimeout(function() {
                         if (typeof input.selectionStart != "undefined") {
                             input.selectionStart = startPos;
@@ -166,11 +150,9 @@
         }    
 
         $('.tt').timePicker({
-            placeholder:"aa",
+            placeholder:"aa"
         });
-        $('.ss').timePicker({
-            placeholder:"",
-        });
+        $('.ss').timePicker();
     })
 
 
