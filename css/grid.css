@@ -1,0 +1,135 @@
+.grid {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #d9d9d9;
+    color: #525252;
+}
+
+.grid .loading {
+    position: absolute;
+    /*background-color: rgba(255,255,255,.8);*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    display: none;
+}
+
+.grid .loading span {
+    width: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 30px;
+    bottom: 1px;
+}
+
+.grid .loading .left {
+    left: 0%;
+    border-right: 1px solid #d9d9d9;
+}
+
+.grid .loading .right {
+    right: 0%;
+    border-left: 1px solid #d9d9d9;
+}
+
+.grid .loading i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -35px;
+    margin-left: -20px;
+}
+
+.grid h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.grid ul,
+.grid ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.grid .data {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.grid .data .col {
+    float: left;
+    background-color: #fff;
+}
+
+.grid .data .col.drag {
+    position: absolute;
+    border: 1px solid #d9d9d9;
+    border-right: none;
+}
+
+.grid .data .col:last-child {
+    margin-right: 15px;
+}
+
+.grid .data .col .head {
+    padding: 0 10px;
+    height: 29px;
+    line-height: 35px;
+    border-bottom: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    overflow: hidden;
+}
+
+.grid .data .col .head.drag-in-left {
+    border-left: 1px solid #dc0000;
+}
+
+.grid .data .col .head.drag-in-right {
+    border-right: 1px solid #dc0000;
+}
+
+.grid .data .col .head h6 {
+    font-size: 14px;
+    float: left;
+    cursor: pointer;
+}
+
+.grid .data .col .head i {
+    line-height: 35px;
+    margin-left: 5px;
+    float: left;
+}
+
+.grid .data .col ul {}
+
+.grid .data .col ul li {
+    height: 29px;
+    line-height: 29px;
+    border-bottom: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.grid .data .col ul li.hover {
+    background-color: #eee;
+}
+
+.grid .data .col ul li.selected {
+    background-color: #dff0d8;
+}
+
+.grid .data .col ul li:last-child {
+    border-bottom: none;
+}
+
+.grid .toolbar {
+    height: 30px;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #d9d9d9;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>grid</title>
+    <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/css/reset.css">
+    <link rel="stylesheet" href="public/css/common.css">
+    <link rel="stylesheet" href="css/grid.css">
+</head>
+
+<body>
+    <div id="grid"></div>
+    <script src="public/js/jquery-2.1.4.min.js"></script>
+    <script src="plugins/grid/js/plugin_grid.js"></script>
+    <script>
+    $(function() {
+        $('#grid').grid({
+        	head:[
+					{text:"Order Id",name:"orderId"},
+					{text:"Custom Id",name:"customId",width:120},
+					{text:"Order Date",name:"orderDate",width:120},
+					{text:"Balance",name:"balance",width:110},
+					{text:"Descript",name:"descript",width:130}
+				 ],
+		    url:"json/gridData.txt"
+        });
+    })
+    // $.fn.grid = function(options) {
+    //     var _DEFAULT_ = {};
+    //     var _PROTO_ = {
+    //         _init: function() {
+    //             this.html('<div class="grid">' +
+    //                 '<div class="data"></div>' +
+    //                 '<div class="toolbar"></div>' +
+    //                 '<div class="loading"><span class="left"></span><span class="right"></span></div></div>');
+    //             this.$data = this.find(".grid .data");
+    //         },
+    //         _render:function () {
+    //         	var head,row;
+				// 	for (var i = 0; i < this.options.head.length; i++) {
+				// 		head = this.options.head[i];
+				// 		this.$data.append('<div class="col">'+
+				// 						'<div class="head" style="width: '+(head.width||80)+'px">'+
+				// 							'<h6 name="'+head.name+'">'+head.text+'</h6>'+
+				// 							'<i></i>'+
+				// 						'</div>'+
+				// 						'<ul name="'+head.name+'"></ul>'+
+				// 					'</div>');
+				// 	}
+    //         }
+
+
+    //     }
+    //     this.options = $.extend(_DEFAULT_, options);
+    //     $.extend(this, _PROTO_);
+    //     this._init();
+    //     this._render();
+    // }
+    </script>
+</body>
+
+</html>
